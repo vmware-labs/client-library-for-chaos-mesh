@@ -1,6 +1,7 @@
 from enum import Enum
 
 from src.python.experiments.k8s.podfault.pod_failure import PodFailure
+from src.python.experiments.k8s.podfault.pod_kill import PodKill
 
 
 class Experiment(Enum):
@@ -13,7 +14,8 @@ class ExperimentFactory:
     instance = None
 
     experiments = {
-        Experiment.K8S_POD_FAILURE: PodFailure
+        Experiment.K8S_POD_FAILURE: PodFailure,
+        Experiment.K8S_POD_KILL: PodKill
     }
 
     @classmethod
