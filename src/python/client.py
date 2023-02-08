@@ -1,7 +1,6 @@
 from enum import Enum
 
-from experiments.k8s.podfault.pod_failure import PodFailure
-from selector import Selector
+from src.python.experiments.k8s.podfault.pod_failure import PodFailure
 
 
 class Experiment(Enum):
@@ -14,7 +13,7 @@ class ExperimentFactory:
     instance = None
 
     experiments = {
-        Experiment.K8S_POD_FAILURE: PodFailure()
+        Experiment.K8S_POD_FAILURE: PodFailure
     }
 
     @classmethod
@@ -23,8 +22,8 @@ class ExperimentFactory:
             cls.instance = ExperimentFactory()
         return cls.instance
 
-    def get(self, e: Experiment):
-        return self.experiments[e]
+    def get(self, e: Experiment, **kwargs):
+        return self.experiments[e](**kwargs)
 
 
 class ChaosMeshClient:
@@ -32,11 +31,11 @@ class ChaosMeshClient:
     def __init__(self):
         self.factory = ExperimentFactory().get_instance()
 
-    def start(self, namespace: str, selector: Selector, e: Experiment):
-        self.factory.get(e).submit(namespace=namespace, selector=selector)
+    def start(self, e: Experiment, namespace, name, **kwargs):
+        self.factory.get(e, **kwargs).submit(namespace, name)
 
-    def pause(self, name: str, namespace: str, e: Experiment):
-        self.factory.get(e).pause(namespace=namespace, experiment_name=name)
+    def pause(self, e: Experiment, namespace, name, **kwargs):
+        self.factory.get(e, **kwargs).pause(namespace, name)
 
-    def delete(self, name: str, namespace: str, e: Experiment):
-        self.factory.get(e).delete(namespace=namespace, name=name)
+    def delete(self, e: Experiment, namespace, name, **kwargs):
+        self.factory.get(e, **kwargs).delete(namespace=namespace, name=name)

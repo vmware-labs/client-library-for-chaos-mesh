@@ -1,4 +1,3 @@
-import uuid
 from abc import ABC, abstractmethod
 
 from polling import poll
@@ -9,7 +8,7 @@ from .crd import CustomObjectsApi
 class ChaosExperiment(CustomObjectsApi, ABC):
 
     def __init__(self):
-        super(ChaosExperiment).__init__()
+        super(ChaosExperiment, self).__init__()
 
     def injected(self, namespace, name):
         obj = self.get(name=name, namespace=namespace)
@@ -27,23 +26,20 @@ class ChaosExperiment(CustomObjectsApi, ABC):
              ignore_exceptions=(Exception,))
 
     @abstractmethod
-    @property
-    def spec(self, **kwargs):
+    def spec(self, namespace, name):
         pass
 
-    @abstractmethod
     @property
     def defaults(self):
-        pass
+        yield
 
-    def submit(self, experiment_name=defaults['name'], namespace=None, **kwargs):
-        self.apply(experiment_name=experiment_name, namespace=namespace, kwargs=kwargs)
-        return experiment_name
+    def submit(self, namespace, name):
+        return self.apply(name=name, namespace=namespace)
 
-    def pause(self, experiment_name, namespace):
-        # TODO implement this; by injecting pause
-        pass
+    def pause(self, namespace, name):
+        self.add_annotation(namespace=namespace, name=name, annotations_map={"experiment.chaos-mesh.org/pause": 'true'})
 
-    def apply(self, experiment_name, namespace, **kwargs):
-        self.wait_experiment_injection(namespace=namespace, name=experiment_name)
-        return super().apply(namespace=namespace, object=self.spec(kwargs))
+    def apply(self, name, namespace):
+        applied = super().apply(namespace=namespace, object=self.spec(namespace=namespace, name=name))
+        self.wait_experiment_injection(namespace=namespace, name=name)
+        return applied

@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 import time
 from kubernetes.client import ApiException
@@ -7,7 +7,7 @@ from polling import TimeoutException
 from .k8s_resource import K8SResource
 
 
-class CustomObjectsApi(K8SResource):
+class CustomObjectsApi(K8SResource, ABC):
     """
     Class for custom object api
     """
@@ -40,15 +40,13 @@ class CustomObjectsApi(K8SResource):
         return self.k8sclient.CustomObjectsApi()
 
     def apply(self, namespace, object):
-        return self.client.create_namespaced_custom_object(group=self.group, version=self.version, namespace=namespace, plural=self.plural,
-                                                           body=object, pretty='true')
+        return self.client.create_namespaced_custom_object(group=self.group, version=self.version, namespace=namespace, plural=self.plural, body=object, pretty='true')
 
     def get_clustered(self, name):
         return self.client.get_cluster_custom_object(group=self.group, version=self.version, plural=self.plural, name=name)
 
     def get(self, namespace, name):
-        return self.client.get_namespaced_custom_object(group=self.group, version=self.version, plural=self.plural,
-                                                        name=name, namespace=namespace)
+        return self.client.get_namespaced_custom_object(group=self.group, version=self.version, plural=self.plural, name=name, namespace=namespace)
 
     def list(self, namespace, **kwargs):
         return self.client.list_namespaced_custom_object(group=self.group, version=self.version, namespace=namespace, plural=self.plural, **kwargs)
