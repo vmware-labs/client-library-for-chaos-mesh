@@ -1,21 +1,23 @@
 from enum import Enum
 
+from src.python.experiments.k8s.podfault.container_kill import ContainerKill
 from src.python.experiments.k8s.podfault.pod_failure import PodFailure
 from src.python.experiments.k8s.podfault.pod_kill import PodKill
 
 
 class Experiment(Enum):
-    K8S_POD_FAILURE = "POD_FAILURE"
-    K8S_POD_KILL = "POD_KILL"
-    K8S_CONTAINER_KILL = "POD_CONTAINER_KILL"
+    POD_FAILURE = "POD_FAILURE"
+    POD_KILL = "POD_KILL"
+    CONTAINER_KILL = "CONTAINER_KILL"
 
 
 class ExperimentFactory:
     instance = None
 
     experiments = {
-        Experiment.K8S_POD_FAILURE: PodFailure,
-        Experiment.K8S_POD_KILL: PodKill
+        Experiment.POD_FAILURE: PodFailure,
+        Experiment.POD_KILL: PodKill,
+        Experiment.CONTAINER_KILL: ContainerKill
     }
 
     @classmethod
