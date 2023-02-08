@@ -1,9 +1,9 @@
+import uuid
 from abc import ABC, abstractmethod
 
 from polling import poll
 
 from .crd import CustomObjectsApi
-from ..selector import Selector
 
 
 class ChaosExperiment(CustomObjectsApi, ABC):
@@ -26,10 +26,24 @@ class ChaosExperiment(CustomObjectsApi, ABC):
              step=2,
              ignore_exceptions=(Exception,))
 
-    def apply(self, namespace, experiment):
-        self.wait_experiment_injection(namespace=namespace, name=experiment.name)
-        return super().apply(namespace=namespace, object=experiment)
+    @abstractmethod
+    @property
+    def spec(self, **kwargs):
+        pass
 
     @abstractmethod
-    def start(self, namespace, selector: Selector):
+    @property
+    def defaults(self):
         pass
+
+    def submit(self, experiment_name=defaults['name'], namespace=None, **kwargs):
+        self.apply(experiment_name=experiment_name, namespace=namespace, kwargs=kwargs)
+        return experiment_name
+
+    def pause(self, experiment_name, namespace):
+        # TODO implement this; by injecting pause
+        pass
+
+    def apply(self, experiment_name, namespace, **kwargs):
+        self.wait_experiment_injection(namespace=namespace, name=experiment_name)
+        return super().apply(namespace=namespace, object=self.spec(kwargs))
