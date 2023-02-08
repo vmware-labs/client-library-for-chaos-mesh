@@ -6,7 +6,7 @@ from src.python.client import ChaosMeshClient, Experiment
 from src.python.selector import Selector
 
 client = ChaosMeshClient()
-selector = Selector({"app": "filebeat"})
+selector = Selector(labelSelectors={"app": "filebeat"})
 
 # name of the experiment
 e_name = str(uuid.uuid4())

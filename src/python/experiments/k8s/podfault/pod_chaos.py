@@ -1,5 +1,6 @@
 import os
 from abc import ABC
+from dataclasses import asdict
 
 from src.python.selector import Selector
 from ...experiment import ChaosExperiment
@@ -33,14 +34,7 @@ class PodChaos(ChaosExperiment, ABC):
                 "labels": self.kwargs['labels']
             },
             "spec": {
-                "selector": {
-                    # TODO Multiple namespace support?
-                    "namespaces": [
-                        namespace,
-                    ],
-                    "labelSelectors": self.kwargs['selector'].get(),
-                    "pods": self.kwargs['pods']
-                },
+                "selector": asdict(self.kwargs['selector']),
                 "mode": "all",
                 "action": self.kwargs.get('action'),
                 "gracePeriod": self.kwargs.get('gracePeriod')
