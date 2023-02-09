@@ -3,3 +3,4 @@
 /src/python/dist/
 /src/python/wheelhouse/
 /.idea/
+/.circleci/
