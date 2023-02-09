@@ -34,7 +34,7 @@ jobs:
             git config --global user.email "gvishrant@vmware.com"
             git config --global user.name "Vishrant Gupta"
             git add version.txt
-            git commit -m "[skip ci] Increment version to $NEW_VERSION"
+            git commit -m "[skip ci] Incrementing version"
             git push
 
             twine upload --username $PYPI_USERNAME --password $PYPI_PASSWORD dist/*
