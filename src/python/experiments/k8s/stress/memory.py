@@ -1,6 +1,6 @@
 from dataclasses import asdict
 
-from src.python.selector import Selector
+from k8s.selector import Selector
 from .stress_test import StressTest
 
 

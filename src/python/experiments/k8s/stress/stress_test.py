@@ -1,6 +1,6 @@
 from abc import ABC
 
-from ...experiment import ChaosExperiment
+from k8s.experiment import ChaosExperiment
 
 
 class StressTest(ChaosExperiment, ABC):
