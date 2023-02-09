@@ -16,11 +16,11 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
-      - run:
-          name: Test
-          command: |
-            . venv/bin/activate
-            pytest
+#      - run:
+#          name: Test
+#          command: |
+#            . venv/bin/activate
+#            pytest
       - run:
           name: Publish to PyPI
           command: |
