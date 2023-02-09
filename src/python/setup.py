@@ -7,7 +7,7 @@ def get_requirements():
         return f.read().splitlines()
 
 
-setup(name='chaos-mesh',
+setup(name='chaos_mesh',
       version="1.0.0",
       description='Chaos Mesh Client',
       author='Vishrant Gupta',
