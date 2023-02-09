@@ -39,7 +39,6 @@ exp_name = str(uuid.uuid4())
 
 # starting up the pod failure experiment
 client.start(Experiment.POD_FAILURE, namespace="default", name=exp_name, selector=selector)
-time.sleep(10)
 ```
 
 #### Pod Kill
@@ -51,7 +50,6 @@ exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
 client.start(Experiment.POD_KILL, namespace="default", name=exp_name, selector=selector)
-time.sleep(10)
 ```
 
 #### Container Kill
@@ -63,7 +61,6 @@ exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
 client.start(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, selector=selector, container_names=['main'])
-time.sleep(10)
 ```
 
 ### Stress Test
@@ -82,7 +79,6 @@ exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
 client.start(Experiment.STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
-time.sleep(10)
 ```
 
 #### Memory
@@ -94,7 +90,6 @@ exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
 client.start(Experiment.STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
-time.sleep(10)
 ```
 
 ### Pausing a running experiment
