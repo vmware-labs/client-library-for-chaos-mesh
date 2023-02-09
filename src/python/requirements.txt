@@ -1,0 +1,4 @@
+auto_mix_prep==0.2.0
+kubernetes==21.7.0
+polling==0.3.2
+setuptools==67.2.0
