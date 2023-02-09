@@ -1,5 +1,20 @@
+import semver
 from setuptools import find_packages
 from setuptools import setup
+
+version_file = "version.txt"
+
+
+# NOTE: major or minor version should be manually updated if the changes are NOT backward compatible
+def bump_version():
+    with open(version_file) as f:
+        version = f.read().strip()
+
+    incremented_version = semver.VersionInfo.parse(version).bump_patch()
+    with open(version_file, "w") as file:
+        file.write(str(incremented_version))
+
+    return str(incremented_version)
 
 
 def get_requirements():
@@ -8,7 +23,7 @@ def get_requirements():
 
 
 setup(name='chaos_mesh',
-      version="1.0.0",
+      version=bump_version(),
       description='A client to create experiments in ChaosMesh',
       author='Vishrant Gupta',
       author_email='gvishrant@vmware.com',

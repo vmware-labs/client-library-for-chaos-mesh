@@ -29,4 +29,11 @@ jobs:
             . venv/bin/activate
             pip install --upgrade twine setuptools wheel
             python setup.py sdist bdist_wheel
+
+            # commit incremented version
+            git config --global user.email "gvishrant@vmware.com"
+            git config --global user.name "Vishrant Gupta"
+            git add setup.py
+            git commit -m "Increment version to $NEW_VERSION"
+
             twine upload --username $PYPI_USERNAME --password $PYPI_PASSWORD dist/*
