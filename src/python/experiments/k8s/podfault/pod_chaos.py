@@ -1,8 +1,8 @@
 from abc import ABC
 from dataclasses import asdict
 
-from src.python.selector import Selector
-from ...experiment import ChaosExperiment
+from k8s.experiment import ChaosExperiment
+from k8s.selector import Selector
 
 
 class PodChaos(ChaosExperiment, ABC):

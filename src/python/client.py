@@ -1,10 +1,10 @@
 from enum import Enum
 
-from src.python.experiments.k8s.podfault.container_kill import ContainerKill
-from src.python.experiments.k8s.podfault.pod_failure import PodFailure
-from src.python.experiments.k8s.podfault.pod_kill import PodKill
-from src.python.experiments.k8s.stress.cpu import StressCPU
-from src.python.experiments.k8s.stress.memory import StressMemory
+from experiments.k8s.podfault.container_kill import ContainerKill
+from experiments.k8s.podfault.pod_failure import PodFailure
+from experiments.k8s.podfault.pod_kill import PodKill
+from experiments.k8s.stress.cpu import StressCPU
+from experiments.k8s.stress.memory import StressMemory
 
 
 class Experiment(Enum):
