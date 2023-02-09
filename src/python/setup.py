@@ -9,10 +9,11 @@ def get_requirements():
 
 setup(name='chaos_mesh',
       version="1.0.0",
-      description='Chaos Mesh Client',
+      description='A client to create experiments in ChaosMesh',
       author='Vishrant Gupta',
       author_email='gvishrant@vmware.com',
       packages=find_packages(),
+      url='https://github.com/arkrwn/chaos-python',
       include_package_data=True,
       install_requires=get_requirements(),
       platform='any',
