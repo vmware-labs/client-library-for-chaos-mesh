@@ -1,0 +1,30 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8.5
+    environment:
+      PIP_CACHE_DIR: "/tmp/pip_cache"
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            cd src/python/
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+      - run:
+          name: Test
+          command: |
+            . venv/bin/activate
+            pytest
+      - run:
+          name: Publish to PyPI
+          command: |
+            . venv/bin/activate
+            pip install twine
+            python setup.py sdist bdist_wheel
+            twine upload --username $PYPI_USERNAME --password $PYPI_PASSWORD dist/*
