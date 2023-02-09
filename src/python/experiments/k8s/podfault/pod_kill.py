@@ -10,9 +10,5 @@ class PodKill(PodChaos):
     def __init__(self, **kwargs):
         super(PodKill, self).__init__(**kwargs)
 
-    @property
-    def defaults(self):
-        return {
-            "action": "pod-kill",
-            "gracePeriod": 0,
-        }
+    def action(self):
+        return "pod-kill"

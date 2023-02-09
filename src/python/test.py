@@ -41,3 +41,25 @@ time.sleep(10)
 
 # pausing the experiment
 client.pause(Experiment.CONTAINER_KILL, namespace="default", name=exp_name)
+
+# -- Stress CPU experiment --
+
+exp_name = str(uuid.uuid4())
+
+# starting up the pod kill experiment
+client.start(Experiment.STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+time.sleep(10)
+
+# pausing the experiment
+client.pause(Experiment.STRESS_CPU, namespace="default", name=exp_name)
+
+# -- Stress memory experiment --
+
+exp_name = str(uuid.uuid4())
+
+# starting up the pod kill experiment
+client.start(Experiment.STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+time.sleep(10)
+
+# pausing the experiment
+client.pause(Experiment.STRESS_MEMORY, namespace="default", name=exp_name)

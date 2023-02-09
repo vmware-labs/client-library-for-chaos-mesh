@@ -3,12 +3,16 @@ from enum import Enum
 from src.python.experiments.k8s.podfault.container_kill import ContainerKill
 from src.python.experiments.k8s.podfault.pod_failure import PodFailure
 from src.python.experiments.k8s.podfault.pod_kill import PodKill
+from src.python.experiments.k8s.stress.cpu import StressCPU
+from src.python.experiments.k8s.stress.memory import StressMemory
 
 
 class Experiment(Enum):
     POD_FAILURE = "POD_FAILURE"
     POD_KILL = "POD_KILL"
     CONTAINER_KILL = "CONTAINER_KILL"
+    STRESS_CPU = "STRESS_CPU"
+    STRESS_MEMORY = "STRESS_MEMORY"
 
 
 class ExperimentFactory:
@@ -17,7 +21,9 @@ class ExperimentFactory:
     experiments = {
         Experiment.POD_FAILURE: PodFailure,
         Experiment.POD_KILL: PodKill,
-        Experiment.CONTAINER_KILL: ContainerKill
+        Experiment.CONTAINER_KILL: ContainerKill,
+        Experiment.STRESS_CPU: StressCPU,
+        Experiment.STRESS_MEMORY: StressMemory
     }
 
     @classmethod

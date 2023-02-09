@@ -10,9 +10,5 @@ class PodFailure(PodChaos):
     def __init__(self, **kwargs):
         super(PodFailure, self).__init__(**kwargs)
 
-    @property
-    def defaults(self):
-        return {
-            "action": "pod-failure",
-            "gracePeriod": 0,
-        }
+    def action(self):
+        return "pod-failure"

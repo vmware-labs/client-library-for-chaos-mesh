@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 from polling import poll
 
@@ -25,21 +25,17 @@ class ChaosExperiment(CustomObjectsApi, ABC):
              step=2,
              ignore_exceptions=(Exception,))
 
-    @abstractmethod
-    def spec(self, namespace, name):
-        pass
-
     @property
-    def defaults(self):
+    def defaults(self) -> dict:
         yield
 
-    def submit(self, namespace, name):
-        return self.apply(name=name, namespace=namespace)
+    def submit(self, namespace, name, labels=None):
+        return self.apply(name=name, namespace=namespace, labels=labels)
 
     def pause(self, namespace, name):
         self.add_annotation(namespace=namespace, name=name, annotations_map={"experiment.chaos-mesh.org/pause": 'true'})
 
-    def apply(self, name, namespace):
-        applied = super().apply(namespace=namespace, object=self.spec(namespace=namespace, name=name))
+    def apply(self, name, namespace, labels=None):
+        applied = super().apply(namespace=namespace, object=self.manifest(namespace=namespace, name=name, labels=labels))
         self.wait_experiment_injection(namespace=namespace, name=name)
         return applied

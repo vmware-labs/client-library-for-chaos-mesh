@@ -1,9 +1,11 @@
 from abc import abstractmethod, ABC
+from dataclasses import asdict
 
 import time
 from kubernetes.client import ApiException
 from polling import TimeoutException
 
+from .k8s.manifest import Manifest, Metadata
 from .k8s_resource import K8SResource
 
 
@@ -30,6 +32,18 @@ class CustomObjectsApi(K8SResource, ABC):
     @property
     def plural(self):
         return self.api_resources().get('plural')
+
+    @abstractmethod
+    def spec(self) -> dict:
+        pass
+
+    def manifest(self, namespace, name, labels: dict = None) -> dict:
+        return asdict(Manifest(
+          kind=self.plural,
+          api_version=self.group + "/" + self.version,
+          metadata=Metadata(namespace=namespace, name=name, labels=labels),
+          spec=self.spec()
+        ))
 
     @property
     def client(self):
