@@ -13,7 +13,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
 
         # initialize defaults
         for key, value in self.defaults.items():
-            kwargs[key] = kwargs.get(key, value)
+            self.kwargs[key] = kwargs.get(key, value)
 
     def injected(self, namespace, name):
         obj = self.get(name=name, namespace=namespace)
