@@ -27,6 +27,25 @@ def get_requirements():
 setup(name='chaos_mesh',
       version=bump_version(),
       description='A client to create experiments in ChaosMesh',
+      long_description='''
+This is a Chaos Mesh client written in Python, which allows you single point of entry to create experiments.
+
+In order to create the Chaos Mesh client you can use the following command:
+
+```python
+from chaos_client import ChaosMeshClient, Experiment
+from k8s.selector import Selector
+
+client = ChaosMeshClient()
+selector = Selector(labelSelectors={"app": "filebeat"}, namespaces=None, pods=None)
+
+# name of the experiment
+exp_name = str(uuid.uuid4())
+
+# starting up the pod failure experiment
+client.start(Experiment.POD_FAILURE, namespace="default", name=exp_name, selector=selector)
+```
+      ''',
       author='Vishrant Gupta',
       author_email='gvishrant@vmware.com',
       packages=find_packages(),

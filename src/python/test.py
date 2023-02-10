@@ -2,8 +2,8 @@ import random
 
 import time
 
-from client import *
-from k8s.selector import *
+from chaos_client import ChaosMeshClient, Experiment
+from k8s.selector import Selector
 
 client = ChaosMeshClient()
 selector = Selector(labelSelectors={"app": "filebeat"})
@@ -35,7 +35,7 @@ client.pause(Experiment.POD_KILL, namespace="default", name=exp_name)
 
 exp_name = "filebeat-container-kill-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the container kill experiment
 client.start(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 time.sleep(10)
 
@@ -46,7 +46,7 @@ client.pause(Experiment.CONTAINER_KILL, namespace="default", name=exp_name)
 
 exp_name = "filebeat-cpu-stress-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the cpu stress experiment
 client.start(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 time.sleep(10)
 
@@ -57,7 +57,7 @@ client.pause(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name)
 
 exp_name = "filebeat-memory-stress-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the pod memory stress experiment
 client.start(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 time.sleep(10)
 
@@ -68,7 +68,7 @@ client.pause(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
 
 exp_name = "jvm-exception-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the jvm exception experiment
 client.start(Experiment.RAISE_EXCEPTION, namespace="default",
              name=exp_name, selector=selector, targetClass="com.vmware.Main", method="save",
              exception="java.lang.Exception", port=8080)
@@ -81,7 +81,7 @@ client.pause(Experiment.RAISE_EXCEPTION, namespace="default", name=exp_name)
 
 exp_name = "jvm-gc-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the jvm gc experiment
 client.start(Experiment.GC, namespace="default", name=exp_name, selector=selector, port=8080)
 time.sleep(10)
 
@@ -92,7 +92,7 @@ client.pause(Experiment.GC, namespace="default", name=exp_name)
 
 exp_name = "hosts-stress-cpu-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the hosts stress CPU experiment
 client.start(Experiment.HOST_STRESS_MEMORY, namespace="default", name=exp_name,
              address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
              size="30GB")
@@ -105,7 +105,7 @@ client.pause(Experiment.HOST_STRESS_MEMORY, namespace="default", name=exp_name)
 
 exp_name = "hosts-stress-memory-" + random.randint(0, 1000000).__str__()
 
-# starting up the pod kill experiment
+# starting up the hosts stress memory experiment
 client.start(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name,
              address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
              load=1000)

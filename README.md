@@ -11,9 +11,8 @@ This is a Chaos Mesh client written in Python, which allows you single point of 
 In order to create the Chaos Mesh client you can use the following command:
 
 ```python
-from chaos_mesh import ChaosMeshClient
-from chaos_mesh import Selector
-from chaos_mesh import Experiment
+from chaos_client import ChaosMeshClient, Experiment
+from k8s.selector import Selector
 
 client = ChaosMeshClient()
 selector = Selector(labelSelectors={"app": "filebeat"}, namespaces=None, pods=None)
@@ -23,7 +22,7 @@ It supports following experiments:
 
 ### Pod Fault
 
-The pod fault is divided into three categories
+The library supports the following Pod fault
 
 - pod failure
 - pod kill
@@ -65,7 +64,7 @@ client.start(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, sele
 
 ### Stress Test
 
-The stress test is divided into two categories
+The library supports the following Pod stress tests
 
 - cpu
 - memory
@@ -91,6 +90,69 @@ exp_name = str(uuid.uuid4())
 # starting up the pod kill experiment
 client.start(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
+
+### JVM Fault
+The library supports the following JVM fault
+
+- GC
+- Exception
+
+#### GC
+
+In order to create the GC experiment you can use the following command
+
+```python
+# name of the experiment
+exp_name = str(uuid.uuid4())
+
+client.start(Experiment.GC, namespace="default", name=exp_name, selector=selector, port=8080)
+```
+
+#### Exception
+
+In order to create the Exception experiment you can use the following command
+
+```python
+exp_name = str(uuid.uuid4())
+
+client.start(Experiment.RAISE_EXCEPTION, namespace="default",
+             name=exp_name, selector=selector, targetClass="com.vmware.Main", method="save",
+             exception="java.lang.Exception", port=8080)
+```
+
+### Host stress
+
+The library supports the following Host fault
+
+- cpu
+- memory
+
+#### CPU
+
+In order to create the stress cpu experiment you can use the following command
+
+```python
+exp_name = str(uuid.uuid4())
+
+# starting up the host cpu stress experiment
+client.start(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name,
+             address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
+             load=1000)
+```
+
+#### Memory
+
+In order to create the stress memory experiment you can use the following command
+
+```python
+exp_name = str(uuid.uuid4())
+
+# starting up the host memory stress experiment
+client.start(Experiment.HOST_STRESS_MEMORY, namespace="default", name=exp_name,
+             address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
+             size="30GB")
+```
+
 
 ### Pausing a running experiment
 
