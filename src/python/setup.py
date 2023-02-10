@@ -1,10 +1,14 @@
 from glob import iglob
+from pathlib import Path
 
 import semver
 from setuptools import find_packages
 from setuptools import setup
 
 version_file = "version.txt"
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 
 # NOTE: major or minor version should be manually updated if the changes are NOT backward compatible
@@ -27,25 +31,8 @@ def get_requirements():
 setup(name='chaos_mesh',
       version=bump_version(),
       description='A client to create experiments in ChaosMesh',
-      long_description='''
-This is a Chaos Mesh client written in Python, which allows you single point of entry to create experiments.
-
-In order to create the Chaos Mesh client you can use the following command:
-
-```python
-from chaos_client import ChaosMeshClient, Experiment
-from k8s.selector import Selector
-
-client = ChaosMeshClient()
-selector = Selector(labelSelectors={"app": "filebeat"}, namespaces=None, pods=None)
-
-# name of the experiment
-exp_name = str(uuid.uuid4())
-
-# starting up the pod failure experiment
-client.start(Experiment.POD_FAILURE, namespace="default", name=exp_name, selector=selector)
-```
-      ''',
+      long_description=long_description,
+      long_description_content_type='text/markdown',
       author='Vishrant Gupta',
       author_email='gvishrant@vmware.com',
       packages=find_packages(),

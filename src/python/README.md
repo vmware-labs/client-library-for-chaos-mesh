@@ -4,7 +4,7 @@ Chaos Mesh is an open source cloud-native Chaos Engineering platform. It offers 
 that might occur in reality during the development, testing, and production environments and find potential problems in the system. To lower the threshold for a Chaos Engineering project, Chaos Mesh provides you with a visualization operation. You
 can easily design your Chaos scenarios on the Web UI and monitor the status of Chaos experiments.
 
-Follow this [documentation](https://chaos-mesh.org/docs/) for the installation steps.
+Follow this [documentation](https://chaos-mesh.org/docs/) for the chaos mesh installation steps.
 
 This is a Chaos Mesh client written in Python, which allows you single point of entry to create experiments.
 
