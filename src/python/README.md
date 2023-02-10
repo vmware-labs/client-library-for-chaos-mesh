@@ -11,8 +11,8 @@ This is a Chaos Mesh client written in Python, which allows you single point of 
 In order to create the Chaos Mesh client you can use the following command:
 
 ```python
-from chaosclient.chaos_client import ChaosMeshClient, Experiment
-from chaosclient.k8s import Selector
+from chaosclient.client import ChaosMeshClient, Experiment
+from chaosclient.k8s.selector import Selector
 
 client = ChaosMeshClient()
 selector = Selector(labelSelectors={"app": "filebeat"}, namespaces=None, pods=None)
