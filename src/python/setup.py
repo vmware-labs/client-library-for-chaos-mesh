@@ -1,3 +1,5 @@
+from glob import iglob
+
 import semver
 from setuptools import find_packages
 from setuptools import setup
@@ -32,4 +34,7 @@ setup(name='chaos_mesh',
       include_package_data=True,
       install_requires=get_requirements(),
       platform='any',
+      data_files=[
+          ('version.txt', iglob('version.txt', recursive=True)),
+      ],
       zip_safe=False)
