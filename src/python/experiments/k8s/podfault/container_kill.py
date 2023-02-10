@@ -15,12 +15,13 @@ class ContainerKill(PodChaos):
     def action(self):
         return "container-kill"
 
-    def spec(self):
+    def validate(self):
         assert self.kwargs['selector'] is not None, "label selector cannot be None"
         assert isinstance(self.kwargs['selector'], Selector), "check the selector type"
 
         assert self.kwargs['container_names'] is not None, "container name cannot be None"
 
+    def spec(self, namespace, name):
         return {
             "selector": asdict(self.kwargs['selector']),
             "mode": self.kwargs['mode'],

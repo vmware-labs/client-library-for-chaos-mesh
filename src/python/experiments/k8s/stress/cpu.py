@@ -1,18 +1,22 @@
 from dataclasses import asdict
 
-from .stress_test import StressTest
 from k8s.selector import Selector
+from .stress_test import StressTest
 
 
-class StressCPU(StressTest):
+class PodStressCPU(StressTest):
 
     def __init__(self, **kwargs):
-        super(StressCPU, self).__init__(**kwargs)
+        super(PodStressCPU, self).__init__(**kwargs)
 
-    def spec(self):
+    def validate(self):
         assert self.kwargs['selector'] is not None, "label selector cannot be None"
         assert isinstance(self.kwargs['selector'], Selector), "check the selector type"
 
+        assert self.kwargs['workers'] is not None, "workers cannot be None"
+        assert self.kwargs['load'] is not None, "size cannot be None"
+
+    def spec(self, namespace, name):
         return {
             "selector": asdict(self.kwargs['selector']),
             "mode": self.kwargs.get('mode'),

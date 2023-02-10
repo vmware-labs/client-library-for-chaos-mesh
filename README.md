@@ -78,7 +78,7 @@ In order to create the stress cpu experiment you can use the following command
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
-client.start(Experiment.STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+client.start(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
 #### Memory
@@ -89,7 +89,7 @@ In order to create the stress memory experiment you can use the following comman
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
-client.start(Experiment.STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+client.start(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
 ### Pausing a running experiment
@@ -98,5 +98,5 @@ In order to pause an experiment you can use the following command
 
 ```python
 # pausing the experiment
-client.pause(Experiment.STRESS_MEMORY, namespace="default", name=exp_name)
+client.pause(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
 ```

@@ -1,29 +1,59 @@
 from enum import Enum
 
+from experiments.hosts.stress.cpu import HostsStressCPU
+from experiments.hosts.stress.memory import HostsStressMemory
+from experiments.k8s.jvmfault.gc import GC
+from experiments.k8s.jvmfault.raise_exception import RaiseException
 from experiments.k8s.podfault.container_kill import ContainerKill
 from experiments.k8s.podfault.pod_failure import PodFailure
 from experiments.k8s.podfault.pod_kill import PodKill
-from experiments.k8s.stress.cpu import StressCPU
-from experiments.k8s.stress.memory import StressMemory
+from experiments.k8s.stress.cpu import PodStressCPU
+from experiments.k8s.stress.memory import PodStressMemory
 
 
 class Experiment(Enum):
     POD_FAILURE = "POD_FAILURE"
     POD_KILL = "POD_KILL"
     CONTAINER_KILL = "CONTAINER_KILL"
-    STRESS_CPU = "STRESS_CPU"
-    STRESS_MEMORY = "STRESS_MEMORY"
+
+    POD_STRESS_CPU = "POD_STRESS_CPU"
+    POD_STRESS_MEMORY = "POD_STRESS_MEMORY"
+
+    RAISE_EXCEPTION = "RAISE_EXCEPTION"
+    GC = "GC"
+
+    HOST_STRESS_MEMORY = "HOST_STRESS_MEMORY"
+    HOST_STRESS_CPU = "HOST_STRESS_CPU"
 
 
 class ExperimentFactory:
     instance = None
 
     experiments = {
+
+        # -- kubernetes experiments --
+
+        # pod fault experiments
         Experiment.POD_FAILURE: PodFailure,
         Experiment.POD_KILL: PodKill,
         Experiment.CONTAINER_KILL: ContainerKill,
-        Experiment.STRESS_CPU: StressCPU,
-        Experiment.STRESS_MEMORY: StressMemory
+
+        # k8s stress experiments
+        Experiment.POD_STRESS_CPU: PodStressCPU,
+        Experiment.POD_STRESS_MEMORY: PodStressMemory,
+
+        # k8s jvm fault experiments
+        Experiment.RAISE_EXCEPTION: RaiseException,
+        Experiment.GC: GC,
+
+        # -- kubernetes experiments ends --
+
+        # -- hosts experiments
+
+        # stress
+        Experiment.HOST_STRESS_MEMORY: HostsStressMemory,
+        Experiment.HOST_STRESS_CPU: HostsStressCPU,
+
     }
 
     @classmethod

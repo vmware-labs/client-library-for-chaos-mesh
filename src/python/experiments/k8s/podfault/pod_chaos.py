@@ -8,21 +8,16 @@ from k8s.selector import Selector
 class PodChaos(ChaosExperiment, ABC):
 
     def __init__(self, **kwargs):
-        super(PodChaos, self).__init__()
-        self.kwargs = kwargs
-        self.kwargs['gracePeriod'] = self.kwargs.get('gracePeriod', self.defaults.get('gracePeriod'))
-        self.kwargs['mode'] = self.kwargs.get('mode', self.defaults.get('mode'))
-        self.kwargs['action'] = self.defaults.get('action')
-
-        self.kwargs['labels'] = self.kwargs.get('labels', {})
-        self.kwargs['pods'] = self.kwargs.get('pods', {})
+        super(PodChaos, self).__init__(**kwargs)
 
     @property
     def defaults(self):
         return {
             "action": self.action(),
             "gracePeriod": 0,
-            "mode": "all"
+            "mode": "all",
+            "labels": {},
+            "pods": {}
         }
 
     def action(self) -> str:
@@ -31,10 +26,11 @@ class PodChaos(ChaosExperiment, ABC):
     def api_resources(self):
         return {"group": 'chaos-mesh.org', "version": 'v1alpha1', "plural": "podchaos"}
 
-    def spec(self):
+    def validate(self):
         assert self.kwargs['selector'] is not None, "label selector cannot be None"
         assert isinstance(self.kwargs['selector'], Selector), "check the selector type"
 
+    def spec(self, namespace, name) -> dict:
         return {
             "selector": asdict(self.kwargs['selector']),
             "mode": self.kwargs.get('mode'),

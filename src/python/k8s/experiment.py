@@ -7,8 +7,13 @@ from .crd import CustomObjectsApi
 
 class ChaosExperiment(CustomObjectsApi, ABC):
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
         super(ChaosExperiment, self).__init__()
+
+        # initialize defaults
+        for key, value in self.defaults.items():
+            kwargs[key] = kwargs.get(key, value)
 
     def injected(self, namespace, name):
         obj = self.get(name=name, namespace=namespace)
@@ -25,11 +30,21 @@ class ChaosExperiment(CustomObjectsApi, ABC):
              step=2,
              ignore_exceptions=(Exception,))
 
+    def validate(self):
+        pass
+
     @property
     def defaults(self) -> dict:
         yield
 
     def submit(self, namespace, name, labels=None):
+
+        assert namespace is not None, "namespace can not be None"
+        assert name is not None, "name can not be None"
+
+        # validating the spec before applying it to k8s
+        self.validate()
+
         return self.apply(name=name, namespace=namespace, labels=labels)
 
     def pause(self, namespace, name):

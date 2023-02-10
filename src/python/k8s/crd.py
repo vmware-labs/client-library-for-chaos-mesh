@@ -34,7 +34,7 @@ class CustomObjectsApi(K8SResource, ABC):
         return self.api_resources().get('plural')
 
     @abstractmethod
-    def spec(self) -> dict:
+    def spec(self, namespace, name) -> dict:
         pass
 
     def manifest(self, namespace, name, labels: dict = None) -> dict:
@@ -42,7 +42,7 @@ class CustomObjectsApi(K8SResource, ABC):
           kind=self.plural,
           api_version=self.group + "/" + self.version,
           metadata=Metadata(namespace=namespace, name=name, labels=labels),
-          spec=self.spec()
+          spec=self.spec(namespace=namespace, name=name)
         ))
 
     @property
