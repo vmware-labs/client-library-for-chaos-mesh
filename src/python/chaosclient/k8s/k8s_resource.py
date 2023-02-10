@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from kubernetes import client
 
-from .kubeclient import load_kube_config
+from chaosclient.k8s.kubeclient import load_kube_config
 
 
 class K8SResource(ABC):

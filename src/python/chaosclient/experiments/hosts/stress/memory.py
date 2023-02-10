@@ -1,4 +1,4 @@
-from .stress_test import StressTest
+from chaosclient.experiments.hosts.stress.stress_test import StressTest
 
 
 class HostsStressMemory(StressTest):

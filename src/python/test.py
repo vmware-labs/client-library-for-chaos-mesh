@@ -2,8 +2,8 @@ import random
 
 import time
 
-from chaos_client import ChaosMeshClient, Experiment
-from k8s.selector import Selector
+from chaosclient.client import ChaosMeshClient, Experiment
+from chaosclient.k8s.selector import Selector
 
 client = ChaosMeshClient()
 selector = Selector(labelSelectors={"app": "filebeat"})

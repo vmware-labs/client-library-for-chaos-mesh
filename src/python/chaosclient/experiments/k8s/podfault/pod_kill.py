@@ -1,6 +1,6 @@
 import os
 
-from .pod_chaos import PodChaos
+from chaosclient.experiments.k8s.podfault.pod_chaos import PodChaos
 
 curr_dir = os.path.dirname(__file__)
 

@@ -1,14 +1,14 @@
 from enum import Enum
 
-from experiments.hosts.stress.cpu import HostsStressCPU
-from experiments.hosts.stress.memory import HostsStressMemory
-from experiments.k8s.jvmfault.gc import GC
-from experiments.k8s.jvmfault.raise_exception import RaiseException
-from experiments.k8s.podfault.container_kill import ContainerKill
-from experiments.k8s.podfault.pod_failure import PodFailure
-from experiments.k8s.podfault.pod_kill import PodKill
-from experiments.k8s.stress.cpu import PodStressCPU
-from experiments.k8s.stress.memory import PodStressMemory
+from chaosclient.experiments.hosts.stress.cpu import HostsStressCPU
+from chaosclient.experiments.hosts.stress.memory import HostsStressMemory
+from chaosclient.experiments.k8s.jvmfault.gc import GC
+from chaosclient.experiments.k8s.jvmfault.raise_exception import RaiseException
+from chaosclient.experiments.k8s.podfault.container_kill import ContainerKill
+from chaosclient.experiments.k8s.podfault.pod_failure import PodFailure
+from chaosclient.experiments.k8s.podfault.pod_kill import PodKill
+from chaosclient.experiments.k8s.stress.cpu import PodStressCPU
+from chaosclient.experiments.k8s.stress.memory import PodStressMemory
 
 
 class Experiment(Enum):

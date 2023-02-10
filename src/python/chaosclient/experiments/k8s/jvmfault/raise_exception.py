@@ -1,5 +1,5 @@
-from experiments.k8s.jvmfault.jvm_fault import JVMFault
-from k8s.selector import Selector
+from chaosclient.experiments.k8s.jvmfault.jvm_fault import JVMFault
+from chaosclient.k8s.selector import Selector
 
 
 class RaiseException(JVMFault):
