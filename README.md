@@ -1,37 +1,47 @@
-## Overview
+# Chaos Mesh Client
+## Introduction
+Chaos Mesh is an open source cloud-native Chaos Engineering platform that allows you to simulate various faults and orchestrate fault scenarios in your kubernetes cluster. This client is written in Python and provides a single point of entry to create and manage experiments in Chaos Mesh.
 
-Chaos Mesh is an open source cloud-native Chaos Engineering platform. It offers various types of fault simulation and has an enormous capability to orchestrate fault scenarios. Using Chaos Mesh, you can conveniently simulate various abnormalities
-that might occur in reality during the development, testing, and production environments and find potential problems in the system. To lower the threshold for a Chaos Engineering project, Chaos Mesh provides you with a visualization operation. You
-can easily design your Chaos scenarios on the Web UI and monitor the status of Chaos experiments.
+## Getting Started
+To start using Chaos Mesh, please follow the installation steps in the [documentation](https://chaos-mesh.org/docs/).
 
-Follow this [documentation](https://chaos-mesh.org/docs/) for the chaos mesh installation steps.
-
-This is a Chaos Mesh client written in Python, which allows you single point of entry to create experiments.
-
-In order to create the Chaos Mesh client you can use the following command:
+To create a Chaos Mesh client, you can use the following code:
 
 ```python
 from chaosclient.client import ChaosMeshClient, Experiment
 from chaosclient.k8s.selector import Selector
 
+# creating the ChaosMesh client
 client = ChaosMeshClient()
-selector = Selector(labelSelectors={"app": "filebeat"}, namespaces=None, pods=None)
+
+# target pods selector; by labelSector or by pods in specified namespaces
+selector = Selector(labelSelectors={"app": "filebeat"}, pods=None, namespaces=None)
 ```
 
-It supports following experiments:
+## Experiment Types
+Chaos Mesh supports various types of experiments, including Pod faults, stress tests, JVM faults, and Host faults.
 
-### Pod Fault
+### Pod Faults
+- Pod failure
+- Pod kill
+- Container kill
 
-The library supports the following Pod fault
+### Stress Tests
+- CPU
+- Memory
 
-- pod failure
-- pod kill
-- container kill
+### JVM Faults
+- GC
+- Exception
 
-#### Pod Failure
+### Host Faults
+- CPU
+- Memory
 
-In order to create the pod failure experiment you can use the following command
+## Experiment Examples
+Here are some examples of how you can create experiments in Chaos Mesh:
 
+### Pod Failure Experiment
 ```python
 # name of the experiment
 exp_name = str(uuid.uuid4())
@@ -40,10 +50,7 @@ exp_name = str(uuid.uuid4())
 client.start(Experiment.POD_FAILURE, namespace="default", name=exp_name, selector=selector)
 ```
 
-#### Pod Kill
-
-In order to create the pod kill experiment you can use the following command
-
+### Pod Kill Experiment
 ```python
 exp_name = str(uuid.uuid4())
 
@@ -51,28 +58,15 @@ exp_name = str(uuid.uuid4())
 client.start(Experiment.POD_KILL, namespace="default", name=exp_name, selector=selector)
 ```
 
-#### Container Kill
-
-In order to create the container kill experiment you can use the following command
-
-```python
+### Container Kill Experiment
+```
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
 client.start(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
-### Stress Test
-
-The library supports the following Pod stress tests
-
-- cpu
-- memory
-
-#### CPU
-
-In order to create the stress cpu experiment you can use the following command
-
+### CPU Stress Test Experiment
 ```python
 exp_name = str(uuid.uuid4())
 
@@ -80,10 +74,7 @@ exp_name = str(uuid.uuid4())
 client.start(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
-#### Memory
-
-In order to create the stress memory experiment you can use the following command
-
+### Memory Stress Test Experiment
 ```python
 exp_name = str(uuid.uuid4())
 
@@ -91,16 +82,7 @@ exp_name = str(uuid.uuid4())
 client.start(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
-### JVM Fault
-The library supports the following JVM fault
-
-- GC
-- Exception
-
-#### GC
-
-In order to create the GC experiment you can use the following command
-
+### GC Experiment
 ```python
 # name of the experiment
 exp_name = str(uuid.uuid4())
@@ -108,28 +90,15 @@ exp_name = str(uuid.uuid4())
 client.start(Experiment.GC, namespace="default", name=exp_name, selector=selector, port=8080)
 ```
 
-#### Exception
-
-In order to create the Exception experiment you can use the following command
-
+### Exception Experiment
 ```python
 exp_name = str(uuid.uuid4())
 
 client.start(Experiment.RAISE_EXCEPTION, namespace="default",
-             name=exp_name, selector=selector, targetClass="com.vmware.Main", method="save",
-             exception="java.lang.Exception", port=8080)
+             name=exp_name, selector=select
 ```
 
-### Host stress
-
-The library supports the following Host fault
-
-- cpu
-- memory
-
-#### CPU
-
-In order to create the stress cpu experiment you can use the following command
+### Host CPU stress
 
 ```python
 exp_name = str(uuid.uuid4())
@@ -140,9 +109,7 @@ client.start(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name,
              load=1000)
 ```
 
-#### Memory
-
-In order to create the stress memory experiment you can use the following command
+### Host Memory stress
 
 ```python
 exp_name = str(uuid.uuid4())
@@ -153,12 +120,19 @@ client.start(Experiment.HOST_STRESS_MEMORY, namespace="default", name=exp_name,
              size="30GB")
 ```
 
-
-### Pausing a running experiment
+## Pause an experiment
 
 In order to pause an experiment you can use the following command
 
 ```python
 # pausing the experiment
 client.pause(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
+```
+
+## Delete the experiment
+
+The experiment can be removed from the k8s cluster using the following command
+
+```python
+client.delete(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
 ```
