@@ -2,7 +2,7 @@ from abc import ABC
 
 from polling import poll
 
-from chaosclient.k8s.crd import CustomObjectsApi
+from chaosmesh.k8s.crd import CustomObjectsApi
 
 
 class ChaosExperiment(CustomObjectsApi, ABC):

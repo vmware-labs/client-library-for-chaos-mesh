@@ -1,8 +1,8 @@
 import os
 from dataclasses import asdict
 
-from chaosclient.experiments.k8s.podfault.pod_chaos import PodChaos
-from chaosclient.k8s.selector import Selector
+from chaosmesh.experiments.k8s.podfault import PodChaos
+from chaosmesh.k8s.selector import Selector
 
 curr_dir = os.path.dirname(__file__)
 

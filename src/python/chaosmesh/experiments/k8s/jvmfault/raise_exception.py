@@ -1,35 +1,33 @@
-from abc import ABC
-
-from chaosclient.experiments.k8s.jvmfault.jvm_fault import JVMFault
-from chaosclient.k8s.selector import Selector
+from chaosmesh.experiments.k8s.jvmfault import JVMFault
+from chaosmesh.k8s.selector import Selector
 
 
-class GC(JVMFault, ABC):
+class RaiseException(JVMFault):
 
     def __init__(self, **kwargs):
-        super(GC, self).__init__(**kwargs)
+        super(RaiseException, self).__init__(**kwargs)
 
     @property
     def defaults(self):
         return {
             "action": self.action(),
-            "class": "",
             "cpuCount": 0,
             "duration": "",
-            "exception": "",
             "latency": 0,
             "memType": "",
-            "method": "",
             "mode": "all",
             "ruleData": "",
-            "value": "",
+            "value": ""
         }
 
     def action(self) -> str:
-        return "gc"
+        return "exception"
 
     def validate(self):
+        assert self.kwargs['targetClass'] is not None, "`targetClass` cannot be None"
+        assert self.kwargs['method'] is not None, "method cannot be None"
+        assert self.kwargs['exception'] is not None, "exception cannot be None"
+        assert self.kwargs['port'] is not None, "port cannot be None"
+
         assert self.kwargs['selector'] is not None, "label selector cannot be None"
         assert isinstance(self.kwargs['selector'], Selector), "invalid Selector type, should be of type k8s.selector"
-
-        assert self.kwargs['port'] is not None, "port cannot be None"

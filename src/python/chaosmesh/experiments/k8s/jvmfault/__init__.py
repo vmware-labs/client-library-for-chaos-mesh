@@ -1,7 +1,7 @@
 from abc import ABC
 from dataclasses import asdict
 
-from chaosclient.k8s.experiment import ChaosExperiment
+from chaosmesh.k8s.experiment import ChaosExperiment
 
 
 class JVMFault(ChaosExperiment, ABC):

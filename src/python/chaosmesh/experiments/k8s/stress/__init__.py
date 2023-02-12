@@ -1,6 +1,6 @@
 from abc import ABC
 
-from chaosclient.k8s.experiment import ChaosExperiment
+from chaosmesh.k8s.experiment import ChaosExperiment
 
 
 class StressTest(ChaosExperiment, ABC):

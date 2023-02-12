@@ -1,4 +1,4 @@
-from chaosclient.experiments.hosts.stress.stress_test import StressTest
+from chaosmesh.experiments.hosts.stress import StressTest
 
 
 class HostsStressCPU(StressTest):
@@ -21,6 +21,7 @@ class HostsStressCPU(StressTest):
         return {
             "action": self.action(),
             "address": self.kwargs['address'],
+            "mode": self.kwargs.get('mode'),
             "stress-cpu": {
                 "load": self.kwargs['load'],
                 "workers": self.kwargs['workers']

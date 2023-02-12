@@ -8,11 +8,11 @@ To start using Chaos Mesh, please follow the installation steps in the [document
 To create a Chaos Mesh client, you can use the following code:
 
 ```python
-from chaosclient.client import ChaosMeshClient, Experiment
-from chaosclient.k8s.selector import Selector
+from chaosmesh.client import Client, Experiment
+from chaosmesh.k8s.selector import Selector
 
 # creating the ChaosMesh client
-client = ChaosMeshClient()
+client = Client()
 
 # target pods selector; by labelSector or by pods in specified namespaces
 selector = Selector(labelSelectors={"app": "filebeat"}, pods=None, namespaces=None)
@@ -47,7 +47,7 @@ Here are some examples of how you can create experiments in Chaos Mesh:
 exp_name = str(uuid.uuid4())
 
 # starting up the pod failure experiment
-client.start(Experiment.POD_FAILURE, namespace="default", name=exp_name, selector=selector)
+client.start_experiment(Experiment.POD_FAILURE, namespace="default", name=exp_name, selector=selector)
 ```
 
 ### Pod Kill Experiment
@@ -55,7 +55,7 @@ client.start(Experiment.POD_FAILURE, namespace="default", name=exp_name, selecto
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
-client.start(Experiment.POD_KILL, namespace="default", name=exp_name, selector=selector)
+client.start_experiment(Experiment.POD_KILL, namespace="default", name=exp_name, selector=selector)
 ```
 
 ### Container Kill Experiment
@@ -63,7 +63,7 @@ client.start(Experiment.POD_KILL, namespace="default", name=exp_name, selector=s
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
-client.start(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+client.start_experiment(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
 ### CPU Stress Test Experiment
@@ -71,7 +71,7 @@ client.start(Experiment.CONTAINER_KILL, namespace="default", name=exp_name, sele
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
-client.start(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+client.start_experiment(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
 ### Memory Stress Test Experiment
@@ -79,7 +79,7 @@ client.start(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, sele
 exp_name = str(uuid.uuid4())
 
 # starting up the pod kill experiment
-client.start(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
+client.start_experiment(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, selector=selector, container_names=['main'])
 ```
 
 ### GC Experiment
@@ -87,14 +87,14 @@ client.start(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name, s
 # name of the experiment
 exp_name = str(uuid.uuid4())
 
-client.start(Experiment.GC, namespace="default", name=exp_name, selector=selector, port=8080)
+client.start_experiment(Experiment.GC, namespace="default", name=exp_name, selector=selector, port=8080)
 ```
 
 ### Exception Experiment
 ```python
 exp_name = str(uuid.uuid4())
 
-client.start(Experiment.RAISE_EXCEPTION, namespace="default",
+client.start_experiment(Experiment.RAISE_EXCEPTION, namespace="default",
              name=exp_name, selector=select
 ```
 
@@ -104,7 +104,7 @@ client.start(Experiment.RAISE_EXCEPTION, namespace="default",
 exp_name = str(uuid.uuid4())
 
 # starting up the host cpu stress experiment
-client.start(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name,
+client.start_experiment(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name,
              address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
              load=1000)
 ```
@@ -115,7 +115,7 @@ client.start(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name,
 exp_name = str(uuid.uuid4())
 
 # starting up the host memory stress experiment
-client.start(Experiment.HOST_STRESS_MEMORY, namespace="default", name=exp_name,
+client.start_experiment(Experiment.HOST_STRESS_MEMORY, namespace="default", name=exp_name,
              address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
              size="30GB")
 ```
@@ -126,7 +126,7 @@ In order to pause an experiment you can use the following command
 
 ```python
 # pausing the experiment
-client.pause(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
+client.pause_experiment(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
 ```
 
 ## Delete the experiment
@@ -134,5 +134,5 @@ client.pause(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
 The experiment can be removed from the k8s cluster using the following command
 
 ```python
-client.delete(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
+client.delete_experiment(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
 ```

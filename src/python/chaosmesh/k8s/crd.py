@@ -5,8 +5,8 @@ import time
 from kubernetes.client import ApiException
 from polling import TimeoutException
 
-from chaosclient.k8s.k8s_resource import K8SResource
-from chaosclient.k8s.manifest import Manifest, Metadata
+from chaosmesh.k8s.k8s_resource import K8SResource
+from chaosmesh.k8s.manifest import Manifest, Metadata
 
 
 class CustomObjectsApi(K8SResource, ABC):
