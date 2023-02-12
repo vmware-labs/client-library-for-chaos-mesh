@@ -1,13 +1,18 @@
+import logging
 import random
 
+import sys
 import time
 
 from chaosmesh.client import Client
 from chaosmesh.experiments import Experiment
 from chaosmesh.k8s.selector import Selector
 
-client = Client()
+client = Client(version="v1alpha1")
 selector = Selector(labelSelectors={"app": "filebeat"})
+
+logging.getLogger("chaosmesh")
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 # -- Pod failure experiment --

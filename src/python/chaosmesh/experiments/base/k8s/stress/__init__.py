@@ -19,5 +19,5 @@ class StressTest(ChaosExperiment, ABC):
             "workers": 1
         }
 
-    def api_resources(self):
+    def api_resources(self) -> dict:
         return {"group": 'chaos-mesh.org', "version": 'v1alpha1', "plural": "stresschaos"}
