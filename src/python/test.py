@@ -86,7 +86,7 @@ def test_jvm_exception():
 
     # starting up the jvm exception experiment
     client.start_experiment(Experiment.RAISE_EXCEPTION, namespace="default",
-                            name=exp_name, selector=selector, targetClass="com.vmware.Main", method="save",
+                            name=exp_name, selector=selector, targetClass="com.company.Main", method="save",
                             exception="java.lang.Exception", port=8080)
     time.sleep(10)
 

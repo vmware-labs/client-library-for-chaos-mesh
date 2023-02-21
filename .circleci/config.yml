@@ -31,7 +31,7 @@ jobs:
             python setup.py sdist bdist_wheel
 
             # commit incremented version
-            git config --global user.email "gvishrant@vmware.com"
+            git config --global user.email "vishrant.gupta@gmail.com"
             git config --global user.name "Vishrant Gupta"
             git add version.txt
             git commit -m "[skip ci] Incrementing version"
