@@ -33,7 +33,9 @@ jobs:
             # commit incremented version
             git config --global user.email "vishrant.gupta@gmail.com"
             git config --global user.name "Vishrant Gupta"
+
             git add version.txt
+
             git commit -m "[skip ci] Incrementing version"
             git push
 
