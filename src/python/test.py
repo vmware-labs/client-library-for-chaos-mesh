@@ -27,6 +27,10 @@ def test_pod_failure():
     # pausing the experiment
     client.pause_experiment(Experiment.POD_FAILURE, namespace="default", name=exp_name)
 
+    # deleting the experiment
+    client.delete_experiment(Experiment.POD_FAILURE, namespace="default", name=exp_name)
+    time.sleep(5)
+
 
 # -- Pod kill experiment --
 def test_pod_kill():

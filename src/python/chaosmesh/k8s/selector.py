@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from typing import List
+from typing import List, Dict
 
 
 @dataclass
@@ -11,9 +11,9 @@ class Selector:
     Attributes:
     ----------------
     namespaces (List[str]): List of namespaces to select objects from.
-    labelSelectors (dict): Dictionary of label selectors to filter the objects.
+    labelSelectors (Dict): Dictionary of label selectors to filter the objects.
     pods (List[str]): List of pod names to select.
     """
     namespaces: List[str] = None
-    labelSelectors: dict = None
+    labelSelectors: Dict = None
     pods: List[str] = None

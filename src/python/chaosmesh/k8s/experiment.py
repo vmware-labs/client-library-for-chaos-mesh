@@ -70,7 +70,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
 
         """
         poll(lambda: self.injected(namespace, name),
-             timeout=int(60),
+             timeout=int(120),
              step=2,
              ignore_exceptions=(Exception,))
 
