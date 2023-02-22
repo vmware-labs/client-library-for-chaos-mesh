@@ -134,6 +134,17 @@ def test_host_cpu_stress():
     client.pause_experiment(Experiment.HOST_STRESS_CPU, namespace="default", name=exp_name)
 
 
+def test_network_partition():
+    exp_name = "network-partition-" + random.randint(0, 1000000).__str__()
+
+    # starting up the network partition experiment
+    client.start_experiment(Experiment.NETWORK_PARTITION, namespace="default", name=exp_name, selector=selector, external_targets=["tcx"], direction="both")
+    time.sleep(10)
+
+    # pausing the experiment
+    client.pause_experiment(Experiment.NETWORK_PARTITION, namespace="default", name=exp_name)
+
+
 test_pod_failure()
 test_pod_kill()
 test_container_kill()
@@ -143,3 +154,4 @@ test_jvm_exception()
 test_jvm_gc()
 test_host_memory_stress()
 test_host_cpu_stress()
+test_network_partition()

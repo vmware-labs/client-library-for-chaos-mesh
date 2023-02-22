@@ -69,7 +69,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
             name (str): The name of the experiment.
 
         """
-        poll(lambda: self.injected(namespace, name),
+        poll(lambda: self.injected(namespace, name) == "True",
              timeout=int(120),
              step=2,
              ignore_exceptions=(Exception,))
