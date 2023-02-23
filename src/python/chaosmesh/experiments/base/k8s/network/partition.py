@@ -5,7 +5,7 @@ from chaosmesh.experiments.base.k8s.network import NetworkChaos
 from chaosmesh.k8s.selector import Selector
 
 
-class NetworkPartitionExperiment(NetworkChaos, ABC):
+class BaseNetworkPartitionExperiment(NetworkChaos, ABC):
     """
     A network partition experiment for Kubernetes.
     """
@@ -17,7 +17,7 @@ class NetworkPartitionExperiment(NetworkChaos, ABC):
         :param kwargs: keyword arguments for the experiment.
         """
 
-        super(NetworkPartitionExperiment, self).__init__(**kwargs)
+        super(BaseNetworkPartitionExperiment, self).__init__(**kwargs)
 
     @property
     def defaults(self):

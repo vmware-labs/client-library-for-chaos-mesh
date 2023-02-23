@@ -1,7 +1,7 @@
-from chaosmesh.experiments.base.k8s.network.bandwidth import NetworkBandwidthExperiment
+from chaosmesh.experiments.base.k8s.network.bandwidth import BaseNetworkBandwidthExperiment
 
 
-class NetworkBandwidth(NetworkBandwidthExperiment):
+class NetworkBandwidth(BaseNetworkBandwidthExperiment):
     """
     NetworkBandwidth is a subclass of NetworkBandwidthExperiment, which defines a Kubernetes network chaos
     experiment that modifies network bandwidth.

@@ -1,4 +1,7 @@
 from chaosmesh.experiments import Experiment, v1alpha1
+from chaosmesh.experiments.v1alpha1.hosts.disk.fill import Fill
+from chaosmesh.experiments.v1alpha1.hosts.disk.read_payload import ReadPayload
+from chaosmesh.experiments.v1alpha1.hosts.disk.write_payload import WritePayload
 from chaosmesh.experiments.v1alpha1.hosts.stress.cpu import HostsStressCPU
 from chaosmesh.experiments.v1alpha1.hosts.stress.memory import HostsStressMemory
 from chaosmesh.experiments.v1alpha1.k8s.jvmfault.gc import GC
@@ -51,6 +54,10 @@ class ExperimentFactory:
             # stress
             Experiment.HOST_STRESS_MEMORY: v1alpha1.hosts.stress.memory.HostsStressMemory,
             Experiment.HOST_STRESS_CPU: v1alpha1.hosts.stress.cpu.HostsStressCPU,
+
+            Experiment.HOST_READ_PAYLOAD: v1alpha1.hosts.disk.read_payload.ReadPayload,
+            Experiment.HOST_WRITE_PAYLOAD: v1alpha1.hosts.disk.write_payload.WritePayload,
+            Experiment.HOST_DISK_FILL: v1alpha1.hosts.disk.fill.Fill
         }
     }
 

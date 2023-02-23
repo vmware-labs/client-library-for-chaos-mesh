@@ -36,7 +36,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
         for key, value in self.defaults.items():
             self.kwargs[key] = kwargs.get(key, value)
 
-    def injected(self, namespace, name):
+    def _is_injected(self, namespace, name):
         """
         Check if the experiment has been injected.
 
@@ -58,9 +58,14 @@ class ChaosExperiment(CustomObjectsApi, ABC):
                 log.debug(f"chaosmesh experiment {name} status is {condition['status']} for condition type {condition['type']}")
 
                 if condition['type'] == 'AllInjected':
-                    return condition['status']
+                    records = obj['status']['experiment']['containerRecords']
+                    for record in records:
+                        if record['phase'] == 'Injected':
+                            log.debug(f"chaosmesh experiment {name} got injected")
+                            return True
+            return False
 
-    def wait_experiment_injection(self, namespace, name):
+    def _wait_experiment_injection(self, namespace, name):
         """
         Wait for the experiment to be injected.
 
@@ -69,7 +74,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
             name (str): The name of the experiment.
 
         """
-        poll(lambda: self.injected(namespace, name) == "True",
+        poll(lambda: self._is_injected(namespace, name),
              timeout=int(120),
              step=2,
              ignore_exceptions=(Exception,))
@@ -147,7 +152,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
         log.debug(f"creating chaosmesh resource {json.dumps(manifest, indent=4)}")
 
         applied = super().apply(namespace=namespace, object=manifest)
-        self.wait_experiment_injection(namespace=namespace, name=name)
+        self._wait_experiment_injection(namespace=namespace, name=name)
 
         log.info(f"chaosmesh experiment {name} got applied")
 

@@ -157,6 +157,40 @@ def test_network_bandwidth():
     client.pause_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name)
 
 
+def test_read_payload():
+    exp_name = "disk-fault-read-payload-" + random.randint(0, 1000000).__str__()
+
+    # starting up the read payload experiment
+    client.start_experiment(Experiment.HOST_READ_PAYLOAD, namespace="default", name=exp_name, selector=selector, address=["address"], size="1024K", path="/", payload_process_num=1)
+    time.sleep(10)
+
+    # pausing the experiment
+    client.pause_experiment(Experiment.HOST_READ_PAYLOAD, namespace="default", name=exp_name)
+
+
+def test_write_payload():
+    exp_name = "disk-fault-write-payload-" + random.randint(0, 1000000).__str__()
+
+    # starting up the write payload experiment
+    client.start_experiment(Experiment.HOST_WRITE_PAYLOAD, namespace="default", name=exp_name, selector=selector, address=["address"], size="1024K", path="/",
+                            payload_process_num=1)
+    time.sleep(10)
+
+    # pausing the experiment
+    client.pause_experiment(Experiment.HOST_WRITE_PAYLOAD, namespace="default", name=exp_name)
+
+
+def test_disk_fill():
+    exp_name = "disk-fault-fill-" + random.randint(0, 1000000).__str__()
+
+    # starting up the disk fill experiment
+    client.start_experiment(Experiment.HOST_DISK_FILL, namespace="default", name=exp_name, selector=selector, address=["address"], size="1024K", path="/", fill_by_fallocate=True)
+    time.sleep(10)
+
+    # pausing the experiment
+    client.pause_experiment(Experiment.HOST_DISK_FILL, namespace="default", name=exp_name)
+
+
 test_pod_failure()
 test_pod_kill()
 test_container_kill()
@@ -168,3 +202,6 @@ test_host_memory_stress()
 test_host_cpu_stress()
 test_network_partition()
 test_network_bandwidth()
+test_read_payload()
+test_write_payload()
+test_disk_fill()

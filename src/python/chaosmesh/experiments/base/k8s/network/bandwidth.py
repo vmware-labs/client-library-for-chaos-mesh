@@ -5,7 +5,7 @@ from chaosmesh.experiments.base.k8s.network import NetworkChaos
 from chaosmesh.k8s.selector import Selector
 
 
-class NetworkBandwidthExperiment(NetworkChaos, ABC):
+class BaseNetworkBandwidthExperiment(NetworkChaos, ABC):
     """
     Defines a network bandwidth chaos experiment.
 
@@ -28,7 +28,7 @@ class NetworkBandwidthExperiment(NetworkChaos, ABC):
         Args:
             **kwargs: Arbitrary keyword arguments to configure the network bandwidth experiment.
         """
-        super(NetworkBandwidthExperiment, self).__init__(**kwargs)
+        super(BaseNetworkBandwidthExperiment, self).__init__(**kwargs)
 
     @property
     def defaults(self):

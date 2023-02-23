@@ -1,7 +1,7 @@
-from chaosmesh.experiments.base.k8s.network.partition import NetworkPartitionExperiment
+from chaosmesh.experiments.base.k8s.network.partition import BaseNetworkPartitionExperiment
 
 
-class NetworkPartition(NetworkPartitionExperiment):
+class NetworkPartition(BaseNetworkPartitionExperiment):
     """
     A network partition experiment for Kubernetes.
     """

@@ -16,6 +16,9 @@ class Experiment(Enum):
         HOST_STRESS_CPU (str): Indicates a Host stress CPU experiment.
         NETWORK_PARTITION (str): Indicates Network Partition experiment.
         NETWORK_BANDWIDTH (str): Indicates Network Bandwidth experiment.
+        HOST_READ_PAYLOAD (str): Indicates Host disk fault read payload experiment.
+        HOST_WRITE_PAYLOAD (str): Indicates Host disk fault write payload experiment.
+        HOST_FILL (str): Indicates Host disk fill experiment.
     """
     POD_FAILURE = "POD_FAILURE"
     POD_KILL = "POD_KILL"
@@ -32,3 +35,7 @@ class Experiment(Enum):
 
     NETWORK_PARTITION = "NETWORK_PARTITION"
     NETWORK_BANDWIDTH = "NETWORK_BANDWIDTH"
+
+    HOST_READ_PAYLOAD = "HOST_READ_PAYLOAD"
+    HOST_WRITE_PAYLOAD = "HOST_WRITE_PAYLOAD"
+    HOST_DISK_FILL = "HOST_DISK_FILL"
