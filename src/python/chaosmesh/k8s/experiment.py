@@ -55,7 +55,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
             conditions = obj['status']['conditions']
 
             for condition in conditions:
-                log.debug(f"chaosmesh experiment {name} status is {condition['status']}")
+                log.debug(f"chaosmesh experiment {name} status is {condition['status']} for condition type {condition['type']}")
 
                 if condition['type'] == 'AllInjected':
                     return condition['status']

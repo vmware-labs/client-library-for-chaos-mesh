@@ -47,6 +47,11 @@ Chaos Mesh supports various types of experiments, including Pod faults, stress t
 - CPU
 - Memory
 
+### Network Attach
+
+- Partition
+- Bandwidth
+
 ## Experiment Examples
 
 Here are some examples of how you can create experiments in Chaos Mesh:
@@ -136,6 +141,26 @@ client.start_experiment(Experiment.HOST_STRESS_MEMORY, namespace="default", name
                         address=["10.225.66.224", "10.225.67.213", "10.225.66.231", "10.225.66.138", "10.225.66.192", "10.225.67.52", "10.225.67.103"],
                         size="30GB")
 ```
+
+### Network Partition
+
+```python
+exp_name = "network-partition-" + random.randint(0, 1000000).__str__()
+
+# starting up the network partition experiment
+client.start_experiment(Experiment.NETWORK_PARTITION, namespace="default", name=exp_name, selector=selector, external_targets=["target"], direction="both")
+```
+
+### Network Bandwidth
+
+```python
+exp_name = "network-bandwidth-" + random.randint(0, 1000000).__str__()
+
+# starting up the network bandwidth experiment
+client.start_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name, selector=selector, rate="1bps", buffer=1, limit=1, direction="to",
+                        external_targets=["target"])
+```
+
 
 ## Pause an experiment
 

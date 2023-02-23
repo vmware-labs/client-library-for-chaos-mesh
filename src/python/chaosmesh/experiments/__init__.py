@@ -14,6 +14,8 @@ class Experiment(Enum):
         GC (str): Indicates a garbage collection experiment.
         HOST_STRESS_MEMORY (str): Indicates a Host stress memory experiment.
         HOST_STRESS_CPU (str): Indicates a Host stress CPU experiment.
+        NETWORK_PARTITION (str): Indicates Network Partition experiment.
+        NETWORK_BANDWIDTH (str): Indicates Network Bandwidth experiment.
     """
     POD_FAILURE = "POD_FAILURE"
     POD_KILL = "POD_KILL"
@@ -29,3 +31,4 @@ class Experiment(Enum):
     HOST_STRESS_CPU = "HOST_STRESS_CPU"
 
     NETWORK_PARTITION = "NETWORK_PARTITION"
+    NETWORK_BANDWIDTH = "NETWORK_BANDWIDTH"

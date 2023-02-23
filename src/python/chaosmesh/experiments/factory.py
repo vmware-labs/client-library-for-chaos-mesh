@@ -3,6 +3,7 @@ from chaosmesh.experiments.v1alpha1.hosts.stress.cpu import HostsStressCPU
 from chaosmesh.experiments.v1alpha1.hosts.stress.memory import HostsStressMemory
 from chaosmesh.experiments.v1alpha1.k8s.jvmfault.gc import GC
 from chaosmesh.experiments.v1alpha1.k8s.jvmfault.raise_exception import RaiseException
+from chaosmesh.experiments.v1alpha1.k8s.network.bandwidth import NetworkBandwidth
 from chaosmesh.experiments.v1alpha1.k8s.network.partition import NetworkPartition
 from chaosmesh.experiments.v1alpha1.k8s.podfault.container_kill import ContainerKill
 from chaosmesh.experiments.v1alpha1.k8s.podfault.pod_failure import PodFailure
@@ -41,6 +42,7 @@ class ExperimentFactory:
             Experiment.GC: v1alpha1.k8s.jvmfault.gc.GC,
 
             Experiment.NETWORK_PARTITION: v1alpha1.k8s.network.partition.NetworkPartition,
+            Experiment.NETWORK_BANDWIDTH: v1alpha1.k8s.network.bandwidth.NetworkBandwidth,
 
             # -- kubernetes experiments ends --
 

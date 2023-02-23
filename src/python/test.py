@@ -138,11 +138,23 @@ def test_network_partition():
     exp_name = "network-partition-" + random.randint(0, 1000000).__str__()
 
     # starting up the network partition experiment
-    client.start_experiment(Experiment.NETWORK_PARTITION, namespace="default", name=exp_name, selector=selector, external_targets=["tcx"], direction="both")
+    client.start_experiment(Experiment.NETWORK_PARTITION, namespace="default", name=exp_name, selector=selector, external_targets=["target"], direction="both")
     time.sleep(10)
 
     # pausing the experiment
     client.pause_experiment(Experiment.NETWORK_PARTITION, namespace="default", name=exp_name)
+
+
+def test_network_bandwidth():
+    exp_name = "network-bandwidth-" + random.randint(0, 1000000).__str__()
+
+    # starting up the network bandwidth experiment
+    client.start_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name, selector=selector, rate="1bps", buffer=1, limit=1, direction="to",
+                            external_targets=["target"])
+    time.sleep(10)
+
+    # pausing the experiment
+    client.pause_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name)
 
 
 test_pod_failure()
@@ -155,3 +167,4 @@ test_jvm_gc()
 test_host_memory_stress()
 test_host_cpu_stress()
 test_network_partition()
+test_network_bandwidth()

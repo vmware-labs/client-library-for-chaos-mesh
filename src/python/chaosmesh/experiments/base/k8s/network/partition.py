@@ -67,9 +67,9 @@ class NetworkPartitionExperiment(NetworkChaos, ABC):
 
         return {
             "selector": asdict(self.kwargs['selector']),
-            "mode": self.kwargs.get('mode'),
-            "action": self.kwargs.get('action'),
-            "duration": self.kwargs.get('duration'),
-            "direction": self.kwargs.get('direction'),
-            "externalTargets": self.kwargs.get('external_targets'),
+            "mode": self.kwargs['mode'],
+            "action": self.kwargs['action'],
+            "duration": self.kwargs['duration'],
+            "direction": self.kwargs['direction'],
+            "externalTargets": self.kwargs['external_targets'],
         }
