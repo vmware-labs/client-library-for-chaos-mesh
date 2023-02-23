@@ -47,6 +47,12 @@ Chaos Mesh supports various types of experiments, including Pod faults, stress t
 - CPU
 - Memory
 
+### Host Disk Fault
+
+- Read payload
+- Write payload
+- Fill
+
 ### Network Attach
 
 - Partition
@@ -142,6 +148,34 @@ client.start_experiment(Experiment.HOST_STRESS_MEMORY, namespace="default", name
                         size="30GB")
 ```
 
+### Host Disk Fault Read payload
+
+```python
+exp_name = "disk-fault-read-payload-" + random.randint(0, 1000000).__str__()
+
+# starting up the read payload experiment
+client.start_experiment(Experiment.HOST_READ_PAYLOAD, namespace="default", name=exp_name, selector=selector, address=["address"], size="1024K", path="/", payload_process_num=1)
+```
+
+### Host Disk Fault Write payload
+
+```python
+exp_name = "disk-fault-write-payload-" + random.randint(0, 1000000).__str__()
+
+# starting up the write payload experiment
+client.start_experiment(Experiment.HOST_WRITE_PAYLOAD, namespace="default", name=exp_name, selector=selector, address=["address"], size="1024K", path="/",
+                        payload_process_num=1)
+```
+
+### Host Disk Fill
+
+```python
+exp_name = "disk-fault-fill-" + random.randint(0, 1000000).__str__()
+
+# starting up the disk fill experiment
+client.start_experiment(Experiment.HOST_DISK_FILL, namespace="default", name=exp_name, selector=selector, address=["address"], size="1024K", path="/", fill_by_fallocate=True)
+```
+
 ### Network Partition
 
 ```python
@@ -160,7 +194,6 @@ exp_name = "network-bandwidth-" + random.randint(0, 1000000).__str__()
 client.start_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name, selector=selector, rate="1bps", buffer=1, limit=1, direction="to",
                         external_targets=["target"])
 ```
-
 
 ## Pause an experiment
 
