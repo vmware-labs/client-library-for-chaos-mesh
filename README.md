@@ -53,7 +53,7 @@ Chaos Mesh supports various types of experiments, including Pod faults, stress t
 - Write payload
 - Fill
 
-### Network Attach
+### Network Attack
 
 - Partition
 - Bandwidth
