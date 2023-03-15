@@ -33,7 +33,8 @@ class PodChaos(ChaosExperiment, ABC):
             "gracePeriod": 0,
             "mode": "all",
             "labels": {},
-            "pods": {}
+            "pods": {},
+            "value": ""
         }
 
     def action(self) -> str:
@@ -77,6 +78,7 @@ class PodChaos(ChaosExperiment, ABC):
         return {
             "selector": asdict(self.kwargs['selector']),
             "mode": self.kwargs.get('mode'),
+            "value": self.kwargs.get('value'),
             "action": self.kwargs.get('action'),
             "gracePeriod": self.kwargs.get('gracePeriod')
         }
