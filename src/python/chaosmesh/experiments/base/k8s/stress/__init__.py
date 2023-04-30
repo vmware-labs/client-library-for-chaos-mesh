@@ -19,5 +19,12 @@ class StressTest(ChaosExperiment, ABC):
             "workers": 1
         }
 
+    @property
+    def schedule(self) -> dict:
+        return {
+            "type": "StressChaos",
+            "spec": "stressChaos"
+        }
+
     def api_resources(self) -> dict:
         return {"group": 'chaos-mesh.org', "version": 'v1alpha1', "plural": "stresschaos"}

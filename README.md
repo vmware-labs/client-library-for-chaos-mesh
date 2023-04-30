@@ -22,6 +22,10 @@ client = Client(version="v1alpha1")
 selector = Selector(labelSelectors={"app": "filebeat"}, pods=None, namespaces=None)
 ```
 
+## Supported API Version
+
+- `chaos-mesh.org/v1alpha1`
+
 ## Experiment Types
 
 Chaos Mesh supports various types of experiments, including Pod faults, stress tests, JVM faults, and Host faults.
@@ -210,6 +214,14 @@ The experiment can be removed from the k8s cluster using the following command
 
 ```python
 client.delete_experiment(Experiment.POD_STRESS_MEMORY, namespace="default", name=exp_name)
+```
+
+## Schedule experiments
+
+Schedule an experiment using the following command
+
+```python
+client.schedule_experiment(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, cron_schedule="*/2 * * * *", selector=selector, container_names=['main'])
 ```
 
 ## Logging

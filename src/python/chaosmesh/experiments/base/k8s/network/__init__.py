@@ -3,6 +3,7 @@ This module defines the `NetworkChaos` class, which is a sub-class of `ChaosExpe
 """
 
 from abc import ABC
+
 from chaosmesh.k8s.experiment import ChaosExperiment
 
 
@@ -28,6 +29,13 @@ class NetworkChaos(ChaosExperiment, ABC):
             str: A string representation of the network chaos experiment action.
         """
         pass
+
+    @property
+    def schedule(self) -> dict:
+        return {
+            "type": "NetworkChaos",
+            "spec": "networkChaos"
+        }
 
     @property
     def defaults(self) -> dict:

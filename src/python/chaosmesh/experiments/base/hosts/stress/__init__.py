@@ -34,6 +34,13 @@ class StressTest(ChaosExperiment, ABC):
         """
         super(StressTest, self).__init__(**kwargs)
 
+    @property
+    def schedule(self) -> dict:
+        return {
+            "type": "PhysicalMachineChaos",
+            "spec": "physicalMachineChaos"
+        }
+
     def api_resources(self) -> dict:
         """
         Returns a dictionary containing the Kubernetes API resource information for the experiment.

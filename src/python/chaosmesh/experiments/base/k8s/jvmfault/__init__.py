@@ -32,6 +32,13 @@ class JVMFault(ChaosExperiment, ABC):
         super(JVMFault, self).__init__(**kwargs)
 
     @property
+    def schedule(self) -> dict:
+        return {
+            "type": "JVMChaos",
+            "spec": "jvmChaos"
+        }
+
+    @property
     def defaults(self) -> dict:
         """
         A generator that yields default values for the JVMFault experiment.

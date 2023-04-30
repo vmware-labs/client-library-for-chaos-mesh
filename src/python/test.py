@@ -191,6 +191,25 @@ def test_disk_fill():
     client.pause_experiment(Experiment.HOST_DISK_FILL, namespace="default", name=exp_name)
 
 
+# -- Schedule pod failure experiment --
+def test_scheduled_pod_failure():
+    # name of the experiment
+    exp_name = "scheduled-filebeat-pod-failure-" + random.randint(0, 1000000).__str__()
+
+    # starting up the pod failure experiment
+    client.schedule_experiment(Experiment.POD_FAILURE, namespace="default", name=exp_name, cron_schedule="*/2 * * * *", selector=selector)
+    time.sleep(10)
+
+
+# -- Schedule stress CPU experiment --
+def test_scheduled_pod_cpu_stress():
+    exp_name = "scheduled-filebeat-cpu-stress-" + random.randint(0, 1000000).__str__()
+
+    # starting up the cpu stress experiment
+    client.schedule_experiment(Experiment.POD_STRESS_CPU, namespace="default", name=exp_name, cron_schedule="*/2 * * * *", selector=selector, container_names=['main'])
+    time.sleep(10)
+
+
 test_pod_failure()
 test_pod_kill()
 test_container_kill()
@@ -205,3 +224,5 @@ test_network_bandwidth()
 test_read_payload()
 test_write_payload()
 test_disk_fill()
+test_scheduled_pod_failure()
+test_scheduled_pod_cpu_stress()

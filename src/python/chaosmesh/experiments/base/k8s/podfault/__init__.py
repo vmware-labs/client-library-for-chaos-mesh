@@ -37,6 +37,13 @@ class PodChaos(ChaosExperiment, ABC):
             "value": ""
         }
 
+    @property
+    def schedule(self) -> dict:
+        return {
+            "type": "PodChaos",
+            "spec": "podChaos"
+        }
+
     def action(self) -> str:
         """
         Returns the action to perform on the selected pods.

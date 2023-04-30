@@ -4,12 +4,12 @@ from abc import ABC
 
 from polling import poll
 
-from chaosmesh.k8s.crd import CustomObjectsApi
+from chaosmesh.k8s.chaos_mesh import ChaosMesh
 
 log = logging.getLogger("chaosmesh")
 
 
-class ChaosExperiment(CustomObjectsApi, ABC):
+class ChaosExperiment(ChaosMesh, ABC):
     """
     The base class for all ChaosMesh experiments.
 
@@ -29,12 +29,11 @@ class ChaosExperiment(CustomObjectsApi, ABC):
             kwargs (dict): A dictionary of arguments for the experiment.
 
         """
-        self.kwargs = kwargs
-        super(ChaosExperiment, self).__init__()
+        super(ChaosExperiment, self).__init__(**kwargs)
 
-        # initialize defaults
-        for key, value in self.defaults.items():
-            self.kwargs[key] = kwargs.get(key, value)
+    @property
+    def schedule(self) -> dict:
+        yield
 
     def _is_injected(self, namespace, name):
         """
@@ -79,45 +78,6 @@ class ChaosExperiment(CustomObjectsApi, ABC):
              step=2,
              ignore_exceptions=(Exception,))
 
-    def validate(self) -> None:
-        """
-        Validate the experiment's specification before submitting it to Kubernetes.
-
-        """
-        pass
-
-    @property
-    def defaults(self) -> dict:
-        """
-        The default values for the experiment.
-
-        Returns:
-            dict: The default values.
-
-        """
-        yield
-
-    def submit(self, namespace, name, labels=None):
-        """
-        Submit the experiment to the given namespace.
-
-        Args:
-            namespace (str): The namespace to which the experiment should be submitted.
-            name (str): The name of the experiment.
-            labels (dict, optional): Labels to be added to the experiment's resource in Kubernetes.
-
-        Returns:
-            dict: The applied experiment's resource in Kubernetes.
-
-        """
-        assert namespace is not None, "namespace can not be None"
-        assert name is not None, "name can not be None"
-
-        # validating the spec before applying it to k8s
-        self.validate()
-
-        return self.apply(name=name, namespace=namespace, labels=labels)
-
     def pause(self, namespace, name):
         """
         Pauses a running ChaosMesh experiment.
@@ -131,7 +91,7 @@ class ChaosExperiment(CustomObjectsApi, ABC):
         """
         self.add_annotation(namespace=namespace, name=name, annotations_map={"experiment.chaos-mesh.org/pause": 'true'})
 
-    def apply(self, name, namespace, labels=None):
+    def create(self, name, namespace, labels=None):
         """
         Submits a ChaosMesh experiment.
 

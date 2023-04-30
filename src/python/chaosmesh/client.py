@@ -2,6 +2,7 @@ import logging
 
 from chaosmesh.experiments import Experiment
 from chaosmesh.experiments.factory import ExperimentFactory
+from chaosmesh.schedules import Schedule
 
 log = logging.getLogger("chaosmesh")
 
@@ -80,3 +81,10 @@ class Client:
         """
         log.info(f"deleting {experiment_type.value} experiment {name} in {namespace} namespace")
         return self.factory.get_experiment(experiment_type, **kwargs).delete(namespace=namespace, name=name)
+
+    def schedule_experiment(self, experiment_type: Experiment, namespace: str, name: str, cron_schedule: str, **kwargs):
+        log.info(f"scheduling {experiment_type.value} experiment {name} in {namespace} namespace")
+        return Schedule(experiment=self.factory.get_experiment(experiment_type, **kwargs), schedule=cron_schedule, **kwargs).submit(namespace=namespace, name=name)
+
+    def delete_schedule(self, experiment_type: Experiment, namespace: str, name: str, **kwargs):
+        return Schedule(self.factory.get_experiment(experiment_type, **kwargs)).delete(namespace=namespace, name=name)

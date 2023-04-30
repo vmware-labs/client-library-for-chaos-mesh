@@ -23,6 +23,13 @@ class DiskFault(ChaosExperiment, ABC):
         return {"group": 'chaos-mesh.org', "version": 'v1alpha1', "plural": "physicalmachinechaos"}
 
     @property
+    def schedule(self) -> dict:
+        return {
+            "type": "DiskFault",
+            "spec": "diskFault"
+        }
+
+    @property
     def defaults(self) -> dict:
         """
         Returns a dictionary containing default values for the experiment configuration.
