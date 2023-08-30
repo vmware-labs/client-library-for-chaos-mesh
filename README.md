@@ -1,4 +1,4 @@
-# Chaos Mesh Client
+# Client Library for Chaos Mesh
 
 ## Introduction
 
