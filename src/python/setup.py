@@ -28,7 +28,7 @@ def get_requirements():
         return f.read().splitlines()
 
 
-setup(name='chaos_mesh',
+setup(name='client-library-for-chaos-mesh',
       version=bump_version(),
       description='A client to create experiments in ChaosMesh',
       long_description=long_description,
@@ -36,11 +36,13 @@ setup(name='chaos_mesh',
       author='Vishrant Gupta',
       author_email='vishrant.gupta@gmail.com',
       packages=find_packages(),
-      url='https://github.com/vishrantgupta/chaos-mesh',
+      url='https://github.com/vishrantgupta/client-library-for-chaos-mesh',
       include_package_data=True,
       install_requires=get_requirements(),
       platform='any',
       data_files=[
           ('version.txt', iglob('version.txt', recursive=True)),
+          ('NOTICE', iglob('NOTICE', recursive=True)),
+          ('NOTICE', iglob('NOTICE', recursive=True)),
       ],
       zip_safe=False)
