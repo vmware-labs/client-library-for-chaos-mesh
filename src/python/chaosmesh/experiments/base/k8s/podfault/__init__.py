@@ -34,7 +34,8 @@ class PodChaos(ChaosExperiment, ABC):
             "mode": "all",
             "labels": {},
             "pods": {},
-            "value": ""
+            "value": "",
+            "duration": ""
         }
 
     @property
@@ -87,5 +88,6 @@ class PodChaos(ChaosExperiment, ABC):
             "mode": self.kwargs.get('mode'),
             "value": self.kwargs.get('value'),
             "action": self.kwargs.get('action'),
-            "gracePeriod": self.kwargs.get('gracePeriod')
+            "gracePeriod": self.kwargs.get('gracePeriod'),
+            "duration": self.kwargs.get('duration')
         }
