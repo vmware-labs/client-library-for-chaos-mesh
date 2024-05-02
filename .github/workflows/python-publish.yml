@@ -55,8 +55,9 @@ jobs:
 
     - name: Publish package
       run: |
-
-        twine upload --username $PYPI_USERNAME --password $PYPI_PASSWORD dist/*
+        
+        token="$api_token"
+        twine upload --username __token__ --password $token dist/*
 
     - name: Commit version
       run: |
