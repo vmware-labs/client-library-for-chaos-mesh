@@ -64,6 +64,7 @@ jobs:
 
         pwd
         ls -lart
+        ls -lart dist/ build/
 
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
