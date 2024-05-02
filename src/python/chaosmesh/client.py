@@ -116,7 +116,7 @@ class Client:
             **kwargs: The optional parameters for the experiment.
 
         Returns:
-            None
+            Schedule
         """
         log.info(f"deleting schedule for {experiment_type.value} experiment {name} in {namespace} namespace")
         return Schedule(self.factory.get_experiment(experiment_type, **kwargs)).delete(namespace=namespace, name=name)
