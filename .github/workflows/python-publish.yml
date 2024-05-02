@@ -51,15 +51,12 @@ jobs:
         python setup.py sdist bdist_wheel
 
         pwd
-        ls -lart
-        ls -lart dist/ build/
+        ls -lart ./ dist/ build/
 
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
-      with:
-        packages-dir: ./src/python/dist/
-        user: $PYPI_USERNAME
-        password: $PYPI_PASSWORD
+      run: |
+
+        twine upload --username $PYPI_USERNAME --password $PYPI_PASSWORD dist/*
 
     - name: Commit version
       run: |
