@@ -1,3 +1,5 @@
+[![Upload Python Package](https://github.com/vmware-labs/client-library-for-chaos-mesh/actions/workflows/python-publish.yml/badge.svg?branch=main)](https://github.com/vmware-labs/client-library-for-chaos-mesh/actions/workflows/python-publish.yml)
+
 # Client Library for Chaos Mesh
 
 ## Introduction
