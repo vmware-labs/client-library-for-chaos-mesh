@@ -40,10 +40,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build
-
-        python3 -m venv venv
-        . venv/bin/activate
+        python -m pip install --upgrade Pillow numpy filetype setuptools wheel twine build semver
 
         # install project dependencies
         pip install -r requirements.txt
@@ -51,16 +48,7 @@ jobs:
     - name: Build package
       run: |
 
-        python3 -m venv venv
-        . venv/bin/activate
-        pip install --upgrade twine setuptools wheel semver
         python setup.py sdist bdist_wheel
-
-        # commit incremented version
-        git config --global user.email "vishrant.gupta@gmail.com"
-        git config --global user.name "Vishrant Gupta"
-
-        git add version.txt
 
         pwd
         ls -lart
@@ -75,6 +63,11 @@ jobs:
 
     - name: Commit version
       run: |
+        # commit incremented version
+        git config --global user.email "vishrant.gupta@gmail.com"
+        git config --global user.name "Vishrant Gupta"
+
+        git add version.txt
 
         git commit -m "[skip ci] Incrementing version"
         git push
