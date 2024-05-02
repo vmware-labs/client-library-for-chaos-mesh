@@ -70,6 +70,8 @@ jobs:
       with:
         user: $PYPI_USERNAME
         password: $PYPI_PASSWORD
+
+    - name: Commit version
       run: |
 
         git commit -m "[skip ci] Incrementing version"
