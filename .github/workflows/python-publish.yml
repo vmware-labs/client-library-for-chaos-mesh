@@ -56,7 +56,7 @@ jobs:
     - name: Publish package
       run: |
         
-        token="$api_token"
+        token="$API_TOKEN"
         twine upload --username __token__ --password $token dist/*
 
     - name: Commit version
