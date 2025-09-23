@@ -1,22 +1,9 @@
-# This workflow will upload a Python Package using Twine when a release is created
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Upload Python Package
-
 on:
   release:
-    types: [published]
-  push:
-    branches:
-      - main
+    types:
+      - published
 
-permissions:
-  contents: write
+name: release
 
 jobs:
   pypi:
@@ -24,73 +11,50 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-
-    
-    
-    defaults:
-      run:
-        working-directory: ./src/python/
-
-    
-
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        ref: main
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.x'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade Pillow numpy filetype setuptools wheel twine build semver
+      - name: deps
+        run: python -m pip install -U build
 
-        # install project dependencies
-        pip install -r requirements.txt
+      - name: build
+        run: python -m build
 
-    - name: Build package
-      run: |
+      - name: mint API token
+        id: mint-token
+        run: |
+          # retrieve the ambient OIDC token
+          resp=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=pypi")
+          oidc_token=$(jq -r '.value' <<< "${resp}")
 
-        python setup.py sdist bdist_wheel
+          # exchange the OIDC token for an API token
+          resp=$(curl -X POST https://pypi.org/_/oidc/mint-token -d "{\"token\": \"${oidc_token}\"}")
+          api_token=$(jq -r '.token' <<< "${resp}")
 
-        pwd
-        ls -lart ./ dist/ build/
+          # mask the newly minted API token, so that we don't accidentally leak it
+          echo "::add-mask::${api_token}"
 
-    - name: mint API token
-      id: mint-token
-      run: |
-        # retrieve the ambient OIDC token
-        resp=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-          "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=pypi")
-        oidc_token=$(jq -r '.value' <<< "${resp}")
+          # see the next step in the workflow for an example of using this step output
+          echo "api-token=${api_token}" >> "${GITHUB_OUTPUT}"
 
-        # exchange the OIDC token for an API token
-        resp=$(curl -X POST https://pypi.org/_/oidc/mint-token -d "{\"token\": \"${oidc_token}\"}")
-        api_token=$(jq -r '.token' <<< "${resp}")
+      - name: publish
+        # gh-action-pypi-publish uses TWINE_PASSWORD automatically
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ steps.mint-token.outputs.api-token }}
 
-        # mask the newly minted API token, so that we don't accidentally leak it
-        echo "::add-mask::${api_token}"
-
-        # see the next step in the workflow for an example of using this step output
-        echo "api-token=${api_token}" >> "${GITHUB_OUTPUT}"
-
-    - name: publish
-      # gh-action-pypi-publish uses TWINE_PASSWORD automatically
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ steps.mint-token.outputs.api-token }}
-
-    - name: Commit version
-      run: |
-        # commit incremented version
-        git config --global user.email "vishrant.gupta@gmail.com"
-        git config --global user.name "Vishrant Gupta"
-
-        git add version.txt
-
-        git commit -m "[skip ci] Incrementing version"
-        git push
+      - name: Commit version
+        run: |
+          # commit incremented version
+          git config --global user.email "vishrant.gupta@gmail.com"
+          git config --global user.name "Vishrant Gupta"
+  
+          git add version.txt
+  
+          git commit -m "[skip ci] Incrementing version"
+          git push
