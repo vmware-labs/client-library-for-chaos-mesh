@@ -63,6 +63,7 @@ Chaos Mesh supports various types of experiments, including Pod faults, stress t
 
 - Partition
 - Bandwidth
+- Delay
 
 ## Experiment Examples
 
@@ -199,6 +200,15 @@ exp_name = "network-bandwidth-" + random.randint(0, 1000000).__str__()
 # starting up the network bandwidth experiment
 client.start_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name, selector=selector, rate="1bps", buffer=1, limit=1, direction="to",
                         external_targets=["target"])
+```
+
+### Network Delay
+
+```python
+exp_name = "network-delay-" + random.randint(0, 1000000).__str__()
+
+# starting up the network partition experiment
+client.start_experiment(Experiment.NETWORK_DELAY, namespace="default", name=exp_name, selector=selector, latency="100ms")
 ```
 
 ## Pause an experiment

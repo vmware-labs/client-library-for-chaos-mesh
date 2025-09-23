@@ -1,6 +1,8 @@
 /wheelhouse/
 /src/python/chaos_mesh.egg-info/
 /src/python/dist/
+/src/python/build/
 /src/python/wheelhouse/
 /.idea/
 /.circleci/
+/src/python/client_library_for_chaos_mesh.egg-info/

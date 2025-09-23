@@ -8,6 +8,7 @@ from chaosmesh.experiments.v1alpha1.k8s.jvmfault.gc import GC
 from chaosmesh.experiments.v1alpha1.k8s.jvmfault.raise_exception import RaiseException
 from chaosmesh.experiments.v1alpha1.k8s.network.bandwidth import NetworkBandwidth
 from chaosmesh.experiments.v1alpha1.k8s.network.partition import NetworkPartition
+from chaosmesh.experiments.v1alpha1.k8s.network.delay import NetworkDelay
 from chaosmesh.experiments.v1alpha1.k8s.podfault.container_kill import ContainerKill
 from chaosmesh.experiments.v1alpha1.k8s.podfault.pod_failure import PodFailure
 from chaosmesh.experiments.v1alpha1.k8s.podfault.pod_kill import PodKill
@@ -46,6 +47,7 @@ class ExperimentFactory:
 
             Experiment.NETWORK_PARTITION: v1alpha1.k8s.network.partition.NetworkPartition,
             Experiment.NETWORK_BANDWIDTH: v1alpha1.k8s.network.bandwidth.NetworkBandwidth,
+            Experiment.NETWORK_DELAY: v1alpha1.k8s.network.delay.NetworkDelay,
 
             # -- kubernetes experiments ends --
 

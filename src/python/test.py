@@ -156,6 +156,15 @@ def test_network_bandwidth():
     # pausing the experiment
     client.pause_experiment(Experiment.NETWORK_BANDWIDTH, namespace="default", name=exp_name)
 
+def test_network_delay():
+    exp_name = "network-delay-" + random.randint(0, 1000000).__str__()
+
+    # starting up the network delay experiment
+    client.start_experiment(Experiment.NETWORK_DELAY, namespace="default", name=exp_name, selector=selector, latency="100ms")
+    time.sleep(10)
+
+    # pausing the experiment
+    client.pause_experiment(Experiment.NETWORK_DELAY, namespace="default", name=exp_name)
 
 def test_read_payload():
     exp_name = "disk-fault-read-payload-" + random.randint(0, 1000000).__str__()
